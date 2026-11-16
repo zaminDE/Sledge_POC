@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1110 1196" width="1110" height="1196" role="img" aria-label="Sledge analytics pipeline: events are validated and loaded into SQL Server, a founder dashboard reads the sensitive warehouse, and only five categorical, hashed fields cross the GA4 boundary through a separate low-privilege exporter.">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8a8a8a"/></marker><marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e0a93b"/></marker></defs>
+<rect width="1110" height="1196" fill="#0b0b0b"/>
+<text x="40" y="46" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="800" fill="#fafafa" text-anchor="start">Sledge analytics pipeline</text>
+<text x="40" y="72" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#a3a3a3" text-anchor="start">How a made-up construction app event becomes a founder dashboard number, and a GA4-safe event</text>
+<text x="40" y="108" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#737373" text-anchor="start" letter-spacing="1.6">INSIDE SLEDGE · FULL DETAIL</text>
+<text x="750" y="108" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#ffb84d" text-anchor="start" letter-spacing="1.6">MAY LEAVE SLEDGE · GA4-SAFE ONLY</text>
+<line x1="720" y1="92" x2="720" y2="1156" stroke="#e0a93b" stroke-width="2" stroke-dasharray="9 7" opacity="0.85"/>
+<text x="710" y="440" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#ffb84d" text-anchor="middle" letter-spacing="2" transform="rotate(-90 710 440)">GA4 DATA BOUNDARY</text>
+<path d="M120,432 H380 V734 H1030 V852 H120 Z" fill="rgba(43,127,255,0.05)" stroke="rgba(122,167,255,0.5)" stroke-width="1.2" stroke-dasharray="6 5" stroke-linejoin="round"/>
+<text x="108" y="642.0" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#7aa7ff" text-anchor="middle" letter-spacing="1.2" transform="rotate(-90 108 642.0)">SQL SERVER · TPM-05 · DATABASE poc</text>
+<rect x="140.0" y="130" width="220" height="92" rx="12" fill="#171717" stroke="#2e2e2e" stroke-width="1"/>
+<text x="156.0" y="152" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#ffb84d" text-anchor="start" letter-spacing="1.2">SOURCE</text>
+<text x="156.0" y="174" font-family="Consolas, 'Cascadia Mono', Menlo, monospace" font-size="14" font-weight="700" fill="#fafafa" text-anchor="start">data/events.jsonl</text>
+<text x="156.0" y="194" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">3,873 made-up app events</text>
+<text x="156.0" y="212" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">amounts · names · tax IDs</text>
+<rect x="140.0" y="280" width="220" height="92" rx="12" fill="#171717" stroke="#2e2e2e" stroke-width="1"/>
+<text x="156.0" y="302" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#7aa7ff" text-anchor="start" letter-spacing="1.2">PYTHON</text>
+<text x="156.0" y="324" font-family="Consolas, 'Cascadia Mono', Menlo, monospace" font-size="14" font-weight="700" fill="#fafafa" text-anchor="start">pipeline/load.py</text>
+<text x="156.0" y="344" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">validates every event</text>
+<text x="156.0" y="362" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">dedupes by event_id</text>
+<rect x="140.0" y="446" width="220" height="92" rx="12" fill="#171717" stroke="#2e2e2e" stroke-width="1"/>
+<text x="156.0" y="468" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#5fd3a8" text-anchor="start" letter-spacing="1.2">TABLE</text>
+<text x="156.0" y="490" font-family="Consolas, 'Cascadia Mono', Menlo, monospace" font-size="14" font-weight="700" fill="#fafafa" text-anchor="start">sledge_raw.events</text>
+<text x="156.0" y="510" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">JSON exactly as received</text>
+<text x="156.0" y="528" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">3,848 kept · 3 rejected</text>
+<rect x="140.0" y="596" width="220" height="92" rx="12" fill="#171717" stroke="#2e2e2e" stroke-width="1"/>
+<text x="156.0" y="618" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#5fd3a8" text-anchor="start" letter-spacing="1.2">TABLES</text>
+<text x="156.0" y="640" font-family="Consolas, 'Cascadia Mono', Menlo, monospace" font-size="14" font-weight="700" fill="#fafafa" text-anchor="start">sledge_core</text>
+<text x="156.0" y="660" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">fact_event · dim_tenant · ref_*</text>
+<text x="156.0" y="678" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">typed · cents · UTC</text>
+<rect x="140.0" y="746" width="220" height="92" rx="12" fill="#171717" stroke="#2e2e2e" stroke-width="1"/>
+<text x="156.0" y="768" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#5fd3a8" text-anchor="start" letter-spacing="1.2">VIEWS</text>
+<text x="156.0" y="790" font-family="Consolas, 'Cascadia Mono', Menlo, monospace" font-size="14" font-weight="700" fill="#fafafa" text-anchor="start">sledge_analytics</text>
+<text x="156.0" y="810" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">weekly active · documents</text>
+<text x="156.0" y="828" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">bill lifecycle · cycle time</text>
+<rect x="140.0" y="896" width="220" height="92" rx="12" fill="#171717" stroke="#2e2e2e" stroke-width="1"/>
+<text x="156.0" y="918" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#7aa7ff" text-anchor="start" letter-spacing="1.2">PYTHON · ADMIN LOGIN</text>
+<text x="156.0" y="940" font-family="Consolas, 'Cascadia Mono', Menlo, monospace" font-size="14" font-weight="700" fill="#fafafa" text-anchor="start">dashboard/build.py</text>
+<text x="156.0" y="960" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">last 12 complete weeks</text>
+<text x="156.0" y="978" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">one self-contained page</text>
+<rect x="140.0" y="1046" width="220" height="92" rx="12" fill="#171717" stroke="#2e2e2e" stroke-width="1"/>
+<text x="156.0" y="1068" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#ffb84d" text-anchor="start" letter-spacing="1.2">OUTPUT · FOUNDERS</text>
+<text x="156.0" y="1090" font-family="Consolas, 'Cascadia Mono', Menlo, monospace" font-size="14" font-weight="700" fill="#fafafa" text-anchor="start">out/dashboard.html</text>
+<text x="156.0" y="1110" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">13 active companies</text>
+<text x="156.0" y="1128" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">1,321 docs · 14.9 days</text>
+<line x1="250" y1="224" x2="250" y2="276" stroke="#8a8a8a" stroke-width="2" marker-end="url(#a)"/>
+<text x="264" y="255.0" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#a3a3a3" text-anchor="start">read line by line</text>
+<line x1="250" y1="374" x2="250" y2="442" stroke="#8a8a8a" stroke-width="2" marker-end="url(#a)"/>
+<text x="264" y="406.0" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#a3a3a3" text-anchor="start">one JSON array → OPENJSON</text>
+<text x="264" y="422.0" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#737373" text-anchor="start">malformed rows kept, flagged</text>
+<line x1="250" y1="540" x2="250" y2="592" stroke="#8a8a8a" stroke-width="2" marker-end="url(#a)"/>
+<text x="264" y="564.0" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#a3a3a3" text-anchor="start">T-SQL transform</text>
+<text x="264" y="580.0" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#737373" text-anchor="start">accepted rows only</text>
+<line x1="250" y1="690" x2="250" y2="742" stroke="#8a8a8a" stroke-width="2" marker-end="url(#a)"/>
+<text x="264" y="721.0" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#a3a3a3" text-anchor="start">views over the facts</text>
+<line x1="250" y1="840" x2="250" y2="892" stroke="#8a8a8a" stroke-width="2" marker-end="url(#a)"/>
+<text x="264" y="871.0" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#a3a3a3" text-anchor="start">SELECT as admin</text>
+<line x1="250" y1="990" x2="250" y2="1042" stroke="#8a8a8a" stroke-width="2" marker-end="url(#a)"/>
+<text x="264" y="1021.0" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#a3a3a3" text-anchor="start">writes HTML</text>
+<line x1="362.0" y1="642.0" x2="786.0" y2="642.0" stroke="#e0a93b" stroke-width="2.5" marker-end="url(#ag)"/>
+<text x="565.0" y="630.0" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#fafafa" text-anchor="middle">reads action, module, surface, channel, tenant_id</text>
+<text x="565.0" y="664.0" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#737373" text-anchor="middle">never reads amounts, names, tax IDs or times</text>
+<rect x="790.0" y="596" width="220" height="92" rx="12" fill="rgba(224,169,59,0.08)" stroke="#e0a93b" stroke-width="1.5"/>
+<text x="806.0" y="618" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#ffb84d" text-anchor="start" letter-spacing="1.2">PYTHON · THE GATE</text>
+<text x="806.0" y="640" font-family="Consolas, 'Cascadia Mono', Menlo, monospace" font-size="14" font-weight="700" fill="#fafafa" text-anchor="start">pipeline/boundary.py</text>
+<text x="806.0" y="660" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">allowlist + vocabularies</text>
+<text x="806.0" y="678" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">tenant ID → HMAC-SHA256</text>
+<rect x="790.0" y="746" width="220" height="92" rx="12" fill="#171717" stroke="#2e2e2e" stroke-width="1"/>
+<text x="806.0" y="768" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#5fd3a8" text-anchor="start" letter-spacing="1.2">TABLE · SAME DATABASE</text>
+<text x="806.0" y="790" font-family="Consolas, 'Cascadia Mono', Menlo, monospace" font-size="14" font-weight="700" fill="#fafafa" text-anchor="start">sledge_ga4.outbox</text>
+<text x="806.0" y="810" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">4 codes + tenant_hash</text>
+<text x="806.0" y="828" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">no $, names or times</text>
+<rect x="790.0" y="896" width="220" height="92" rx="12" fill="#171717" stroke="#2e2e2e" stroke-width="1"/>
+<text x="806.0" y="918" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#7aa7ff" text-anchor="start" letter-spacing="1.2">PYTHON · EXPORTER LOGIN</text>
+<text x="806.0" y="940" font-family="Consolas, 'Cascadia Mono', Menlo, monospace" font-size="14" font-weight="700" fill="#fafafa" text-anchor="start">pipeline/ga4_export.py</text>
+<text x="806.0" y="960" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">reads 7 safe columns only</text>
+<text x="806.0" y="978" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">assert_safe on every line</text>
+<rect x="790.0" y="1046" width="220" height="92" rx="12" fill="#171717" stroke="#2e2e2e" stroke-width="1" stroke-dasharray="6 5"/>
+<text x="806.0" y="1068" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#ffb84d" text-anchor="start" letter-spacing="1.2">DESTINATION</text>
+<text x="806.0" y="1090" font-family="Consolas, 'Cascadia Mono', Menlo, monospace" font-size="14" font-weight="700" fill="#fafafa" text-anchor="start">Google Analytics 4</text>
+<text x="806.0" y="1110" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">action · module · surface</text>
+<text x="806.0" y="1128" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#a3a3a3" text-anchor="start">channel · tenant_hash</text>
+<line x1="900" y1="690" x2="900" y2="742" stroke="#e0a93b" stroke-width="2" marker-end="url(#ag)"/>
+<text x="914" y="721.0" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#a3a3a3" text-anchor="start">4 codes + hashed tenant</text>
+<line x1="900" y1="840" x2="900" y2="892" stroke="#e0a93b" stroke-width="2" marker-end="url(#ag)"/>
+<text x="914" y="864.0" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#a3a3a3" text-anchor="start">SELECT 7 safe columns</text>
+<text x="914" y="880.0" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#737373" text-anchor="start">column-level grant</text>
+<line x1="900" y1="990" x2="900" y2="1042" stroke="#e0a93b" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ag)"/>
+<text x="914" y="1014.0" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#a3a3a3" text-anchor="start">out/ga4_events.jsonl</text>
+<text x="914" y="1030.0" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#737373" text-anchor="start">not sent in this POC</text>
+<circle cx="1006.0" cy="600" r="12" fill="#e0a93b" stroke="#0b0b0b" stroke-width="3"/>
+<text x="1006.0" y="604.5" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#171717" text-anchor="middle">2</text>
+<circle cx="976.0" cy="600" r="12" fill="#e0a93b" stroke="#0b0b0b" stroke-width="3"/>
+<text x="976.0" y="604.5" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#171717" text-anchor="middle">1</text>
+<circle cx="1006.0" cy="750" r="12" fill="#e0a93b" stroke="#0b0b0b" stroke-width="3"/>
+<text x="1006.0" y="754.5" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#171717" text-anchor="middle">3</text>
+<circle cx="1006.0" cy="900" r="12" fill="#e0a93b" stroke="#0b0b0b" stroke-width="3"/>
+<text x="1006.0" y="904.5" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12.5" font-weight="800" fill="#171717" text-anchor="middle">4</text>
+<rect x="760" y="128" width="330" height="412" rx="14" fill="#171717" stroke="#2e2e2e"/>
+<text x="780" y="162" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15.5" font-weight="700" fill="#fafafa" text-anchor="start">How the boundary is enforced</text>
+<text x="780" y="182" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#737373" text-anchor="start">Four independent checks. Any one stops a leak.</text>
+<circle cx="792" cy="210" r="11" fill="#e0a93b"/>
+<text x="792" y="214.5" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="800" fill="#171717" text-anchor="middle">1</text>
+<text x="814" y="215" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#fafafa" text-anchor="start">Allowlist, not blocklist</text>
+<text x="814" y="234" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#a3a3a3" text-anchor="start">builds a new object from 5 named fields;</text>
+<text x="814" y="251" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#a3a3a3" text-anchor="start">never copies the source event</text>
+<circle cx="792" cy="284" r="11" fill="#e0a93b"/>
+<text x="792" y="288.5" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="800" fill="#171717" text-anchor="middle">2</text>
+<text x="814" y="289" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#fafafa" text-anchor="start">Closed vocabularies + keyed hash</text>
+<text x="814" y="308" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#a3a3a3" text-anchor="start">every value must be a known code;</text>
+<text x="814" y="325" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#a3a3a3" text-anchor="start">tenant ID is HMAC-SHA256, key stays in</text>
+<circle cx="792" cy="358" r="11" fill="#e0a93b"/>
+<text x="792" y="362.5" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="800" fill="#171717" text-anchor="middle">3</text>
+<text x="814" y="363" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#fafafa" text-anchor="start">The outbox cannot hold a leak</text>
+<text x="814" y="382" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#a3a3a3" text-anchor="start">only code columns + 32-char hex hash;</text>
+<text x="814" y="399" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#a3a3a3" text-anchor="start">no $, durations, names or times</text>
+<circle cx="792" cy="432" r="11" fill="#e0a93b"/>
+<text x="792" y="436.5" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="800" fill="#171717" text-anchor="middle">4</text>
+<text x="814" y="437" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#fafafa" text-anchor="start">The exporter cannot see secrets</text>
+<text x="814" y="456" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#a3a3a3" text-anchor="start">own login, SELECT on 7 safe columns,</text>
+<text x="814" y="473" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#a3a3a3" text-anchor="start">no access to raw, core or analytics</text>
+<line x1="780" y1="488" x2="1070" y2="488" stroke="#2e2e2e"/>
+<text x="780" y="512" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#a3a3a3" text-anchor="start">assert_safe re-checks every payload before</text>
+<text x="780" y="529" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#a3a3a3" text-anchor="start">it is written · 12 tests guard all four</text>
+<text x="40" y="1182" font-family="Figtree, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#737373" text-anchor="start">Sample data · SQL Server 2022 · Python 3 · pyodbc · see README.md for the data model</text>
+</svg>

@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Founder Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --app: #070707;
+    --surface: #171717;
+    --surface-alt: #1f1f1f;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.14);
+    --text: #fafafa;
+    --text-2: #a3a3a3;
+    --muted: #737373;
+    --grid: rgba(255, 255, 255, 0.06);
+    --axis: rgba(255, 255, 255, 0.14);
+
+    --gold: #e0a93b;
+    --gold-icon: #f4a62a;
+    --gold-text: #ffb84d;
+    --gold-cta-from: #e3b02f;
+    --gold-cta-to: #9e721c;
+    --blue: #2b7fff;
+    --green: #22c55e;
+    --orange: #f97316;
+    --red: #ff6467;
+
+    --series-avg: #5c8ae1;
+    --series-median: #17a750;
+    --status-paid: #1f9e8f;
+    --status-approved: #3f78e0;
+    --status-awaiting: #c08a1e;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    min-height: 100vh;
+    background:
+      radial-gradient(900px 480px at 12% -8%, rgba(224, 169, 59, 0.10), transparent 60%),
+      radial-gradient(800px 520px at 100% 0%, rgba(43, 127, 255, 0.07), transparent 60%),
+      var(--app);
+    color: var(--text);
+    font: 14px/1.45 Figtree, system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 1280px; margin: 0 auto; padding: 28px 16px 56px; }
+  svg.icon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2;
+             stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+  .top { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .eyebrow { color: var(--gold-text); font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+  h1 { margin: 4px 0 0; font-size: 28px; font-weight: 800; letter-spacing: -.01em; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px;
+          border: 1px solid var(--border-strong); background: rgba(255, 255, 255, 0.03); color: var(--text-2); font-size: 13px; }
+  .chip svg.icon { width: 15px; height: 15px; }
+  .chip.gold { color: var(--gold-text); border-color: rgba(224, 169, 59, 0.35); background: rgba(224, 169, 59, 0.08); }
+
+  .card {
+    position: relative; min-width: 0;
+    background: linear-gradient(180deg, rgba(31, 31, 31, 0.92), rgba(20, 20, 20, 0.92));
+    border: 1px solid var(--border); border-radius: 16px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 12px 32px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(10px);
+  }
+
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 22px; }
+  .tile { padding: 18px 20px 18px; --tone: var(--gold);
+          border-color: color-mix(in oklab, var(--tone) 32%, transparent);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 0 0 1px color-mix(in oklab, var(--tone) 6%, transparent),
+                      0 10px 34px color-mix(in oklab, var(--tone) 14%, transparent); }
+  .tile::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+                  background: radial-gradient(240px 120px at 0% 0%, color-mix(in oklab, var(--tone) 12%, transparent), transparent 70%); }
+  .tile.blue { --tone: var(--blue); } .tile.green { --tone: var(--green); } .tile.orange { --tone: var(--orange); }
+  .ichip { display: inline-grid; place-items: center; width: 38px; height: 38px; border-radius: 11px;
+           color: color-mix(in oklab, var(--tone) 85%, white);
+           background: color-mix(in oklab, var(--tone) 16%, transparent);
+           border: 1px solid color-mix(in oklab, var(--tone) 38%, transparent); }
+  .tile .value { margin-top: 14px; font-size: 32px; font-weight: 800; line-height: 1.1; letter-spacing: -.01em; }
+  .tile .value small { font-size: 16px; font-weight: 600; color: var(--text-2); margin-left: 4px; }
+  .tile .label { margin-top: 6px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .tile .sub { margin-top: 3px; color: var(--text-2); font-size: 13px; }
+  .delta { font-weight: 700; }
+  .delta.up { color: var(--green); } .delta.down { color: var(--red); }
+
+  .section { display: flex; align-items: center; gap: 10px; margin: 30px 0 14px; color: var(--muted);
+             font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+  .section svg.icon { width: 15px; height: 15px; }
+  .section::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+
+  .row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 16px; margin-bottom: 16px; }
+  .panel { padding: 20px 22px 16px; }
+  .panel-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+  .panel h2 { margin: 0; font-size: 16px; font-weight: 700; }
+  .panel .desc { margin: 3px 0 0; color: var(--text-2); font-size: 13px; }
+  .panel .ichip { width: 34px; height: 34px; border-radius: 10px; }
+  .panel .ichip svg.icon { width: 16px; height: 16px; }
+  .plot { position: relative; margin-top: 12px; }
+  svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
+  svg.chart text { font-family: Figtree, system-ui, sans-serif; font-size: 12px; fill: var(--muted); }
+  svg.chart text.val { fill: var(--text); font-weight: 700; font-size: 13px; }
+  .legend { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; margin-top: 8px; color: var(--text-2); font-size: 13px; }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .legend i { display: inline-block; width: 14px; height: 2px; border-radius: 2px; background: currentColor; position: relative; }
+  .legend i::after { content: ""; position: absolute; left: 3px; top: -3px; width: 8px; height: 8px; border-radius: 50%;
+                     background: var(--surface); border: 2px solid currentColor; box-sizing: border-box; }
+  .legend i.dot { width: 9px; height: 9px; border-radius: 50%; }
+  .legend i.dot::after { display: none; }
+  .legend b { color: var(--text); font-weight: 600; }
+
+  .modules { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 13px; }
+  .modules .line { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; }
+  .modules .name { color: var(--text); }
+  .modules .num { color: var(--text-2); font-variant-numeric: tabular-nums; }
+  .modules .num b { color: var(--text); font-weight: 700; margin-right: 6px; }
+  .track { margin-top: 6px; height: 8px; border-radius: 999px; background: rgba(224, 169, 59, 0.10); overflow: hidden; }
+  .fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--gold-cta-to), var(--gold-cta-from)); }
+
+  .tip { position: absolute; pointer-events: none; z-index: 3; opacity: 0; transition: opacity .08s;
+         padding: 8px 11px; border-radius: 10px; white-space: nowrap; font-size: 12px; color: var(--text-2);
+         background: rgba(23, 23, 23, 0.96); border: 1px solid var(--border-strong); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); }
+  .tip b { color: var(--text); font-weight: 700; }
+  .tip .k { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
+
+  details { margin-top: 10px; font-size: 13px; }
+  summary { cursor: pointer; color: var(--muted); list-style: none; display: inline-flex; align-items: center; gap: 6px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: "▸"; font-size: 11px; }
+  details[open] summary::before { content: "▾"; }
+  summary:hover { color: var(--text-2); }
+  table { border-collapse: collapse; width: 100%; margin-top: 8px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: right; padding: 5px 8px; border-bottom: 1px solid var(--grid); }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--muted); font-weight: 600; }
+  td { color: var(--text-2); }
+
+  footer { margin-top: 26px; padding: 18px 22px; color: var(--text-2); font-size: 13px; }
+  footer h3 { margin: 0 0 8px; color: var(--text); font-size: 13px; font-weight: 700; }
+  footer p { margin: 4px 0 0; }
+  footer b { color: var(--text); font-weight: 600; }
+
+  @media (max-width: 1080px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 900px) { .row { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .tiles { grid-template-columns: 1fr; } h1 { font-size: 24px; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-building" viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4M10 10h4M10 14h4M10 18h4"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8M16 17H8M10 9H8"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 17.5v-11"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></symbol>
+  <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+  <symbol id="i-bars" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></symbol>
+  <symbol id="i-pie" viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6.5L4.5 19a1.5 1.5 0 0 0 1.3 2.2h12.4a1.5 1.5 0 0 0 1.3-2.2L14 9.5V3"/><path d="M7 15h10"/></symbol>
+</svg>
+
+<main>
+  <header class="top">
+    <div>
+      <div class="eyebrow">Founder dashboard</div>
+      <h1>How the business is running</h1>
+    </div>
+    <div class="chips">
+      <span class="chip"><svg class="icon"><use href="#i-calendar"/></svg><span id="range"></span></span>
+      <span class="chip gold"><svg class="icon"><use href="#i-flask"/></svg>Sample data</span>
+    </div>
+  </header>
+
+  <section class="tiles" id="tiles"></section>
+
+  <div class="section"><svg class="icon"><use href="#i-trend"/></svg>Analytics</div>
+
+  <section class="row">
+    <div class="card panel">
+      <div class="panel-head">
+        <div><h2>Weekly active companies</h2>
+          <p class="desc">Companies where a team member took an action · last 12 weeks</p></div>
+        <span class="ichip" style="--tone: var(--gold)"><svg class="icon"><use href="#i-building"/></svg></span>
+      </div>
+      <div class="plot" id="chart-active"></div>
+      <details><summary>Show as table</summary><div id="table-active"></div></details>
+    </div>
+    <div class="card panel">
+      <div class="panel-head">
+        <div><h2>Bill status</h2>
+          <p class="desc">Bills received in the period, where they stand now</p></div>
+        <span class="ichip" style="--tone: var(--blue)"><svg class="icon"><use href="#i-pie"/></svg></span>
+      </div>
+      <div class="plot" id="chart-status"></div>
+      <div class="legend" id="legend-status"></div>
+    </div>
+  </section>
+
+  <section class="row">
+    <div class="card panel">
+      <div class="panel-head">
+        <div><h2>Bill received to bill paid</h2>
+          <p class="desc">Days per paid bill, by the week it was paid</p></div>
+        <span class="ichip" style="--tone: var(--green)"><svg class="icon"><use href="#i-pulse"/></svg></span>
+      </div>
+      <div class="plot" id="chart-cycle"></div>
+      <div class="legend">
+        <span style="color: var(--series-avg)"><i></i><b>Average</b></span>
+        <span style="color: var(--series-median)"><i></i><b>Median</b></span>
+      </div>
+      <details><summary>Show as table</summary><div id="table-cycle"></div></details>
+    </div>
+    <div class="card panel">
+      <div class="panel-head">
+        <div><h2>Documents per module</h2>
+          <p class="desc">Distinct documents processed in the period</p></div>
+        <span class="ichip" style="--tone: var(--orange)"><svg class="icon"><use href="#i-bars"/></svg></span>
+      </div>
+      <ul class="modules" id="modules"></ul>
+    </div>
+  </section>
+
+  <footer class="card">
+    <h3>How the numbers are defined</h3>
+    <p><b>Active company:</b> one or more actions by the company's own users in a Monday to Sunday week (UTC). Work done by the Sledge agent or by an outside party, such as a vendor signing a waiver, does not count.</p>
+    <p><b>Document processed:</b> a distinct document, counted once in the week it first appears.</p>
+    <p><b>Received to paid:</b> for each paid bill, the time between its first "received" event and its first "paid" event. Unpaid bills are not in the average; they show as awaiting payment.</p>
+  </footer>
+</main>
+
+<script>
+const DATA = {"window": {"start": "2026-08-17", "end": "2026-11-08", "weeks": 12}, "weeks": ["2026-08-17", "2026-08-24", "2026-08-31", "2026-09-07", "2026-09-14", "2026-09-21", "2026-09-28", "2026-10-05", "2026-10-12", "2026-10-19", "2026-10-26", "2026-11-02"], "active": [6, 8, 7, 9, 9, 12, 12, 10, 12, 14, 12, 13], "companiesInWindow": 16, "modules": [{"key": "bills", "label": "Bills (AP)", "documents": 704}, {"key": "invoices", "label": "Invoices (AR)", "documents": 275}, {"key": "lien_waivers", "label": "Lien waivers", "documents": 180}, {"key": "contracts", "label": "Contracts", "documents": 48}, {"key": "pay_packages", "label": "Pay packages", "documents": 39}, {"key": "change_orders", "label": "Change orders", "documents": 38}, {"key": "cois", "label": "COIs", "documents": 37}], "cycle": [{"bills": 12, "avg": 12.93, "median": 10.51}, {"bills": 32, "avg": 10.86, "median": 11.07}, {"bills": 25, "avg": 11.95, "median": 10.46}, {"bills": 37, "avg": 16.23, "median": 14.55}, {"bills": 36, "avg": 15.25, "median": 14.22}, {"bills": 52, "avg": 15.77, "median": 13.0}, {"bills": 41, "avg": 13.87, "median": 12.19}, {"bills": 27, "avg": 14.54, "median": 9.86}, {"bills": 63, "avg": 16.9, "median": 15.16}, {"bills": 58, "avg": 16.01, "median": 13.25}, {"bills": 57, "avg": 14.32, "median": 12.8}, {"bills": 72, "avg": 15.2, "median": 11.58}], "billStatus": {"paid": 475, "approved": 173, "awaiting": 56}, "overall": {"billsPaid": 512, "avgDays": 14.9, "medianDays": 12.7, "billsOpen": 238}};
+const NS = "http://www.w3.org/2000/svg";
+const fmtInt = n => n.toLocaleString("en-US");
+const fmtDay = iso => new Date(iso + "T00:00:00Z").toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
+const weekLabel = iso => "Week of " + fmtDay(iso);
+const icon = id => `<svg class="icon"><use href="#${id}"/></svg>`;
+
+function el(name, attrs, parent, text) {
+  const node = document.createElementNS(NS, name);
+  for (const k in attrs) node.setAttribute(k, attrs[k]);
+  if (text !== undefined) node.textContent = text;
+  if (parent) parent.appendChild(node);
+  return node;
+}
+
+function niceMax(v) {
+  if (v <= 0) return 1;
+  const pow = Math.pow(10, Math.floor(Math.log10(v)));
+  for (const m of [1, 2, 2.5, 4, 5, 8, 10]) if (v <= m * pow) return m * pow;
+  return 10 * pow;
+}
+
+function tooltip(host) {
+  const tip = document.createElement("div");
+  tip.className = "tip";
+  host.appendChild(tip);
+  return {
+    show(html, x, y) {
+      tip.innerHTML = html;
+      tip.style.opacity = 1;
+      const w = tip.offsetWidth;
+      tip.style.left = Math.max(0, Math.min(host.clientWidth - w, x - w / 2)) + "px";
+      tip.style.top = Math.max(-8, y - tip.offsetHeight - 14) + "px";
+    },
+    hide() { tip.style.opacity = 0; }
+  };
+}
+
+function smoothPath(pts) {
+  const n = pts.length;
+  if (n < 2) return "";
+  const dx = [], m = [], t = new Array(n);
+  for (let i = 0; i < n - 1; i++) {
+    dx[i] = pts[i + 1][0] - pts[i][0];
+    m[i] = (pts[i + 1][1] - pts[i][1]) / dx[i];
+  }
+  t[0] = m[0]; t[n - 1] = m[n - 2];
+  for (let i = 1; i < n - 1; i++) t[i] = m[i - 1] * m[i] <= 0 ? 0 : (m[i - 1] + m[i]) / 2;
+  for (let i = 0; i < n - 1; i++) {
+    if (m[i] === 0) { t[i] = 0; t[i + 1] = 0; continue; }
+    const a = t[i] / m[i], b = t[i + 1] / m[i], s = a * a + b * b;
+    if (s > 9) { const k = 3 / Math.sqrt(s); t[i] = k * a * m[i]; t[i + 1] = k * b * m[i]; }
+  }
+  let d = `M${pts[0][0]},${pts[0][1]}`;
+  for (let i = 0; i < n - 1; i++) {
+    const h = dx[i] / 3;
+    d += ` C${pts[i][0] + h},${pts[i][1] + t[i] * h} ${pts[i + 1][0] - h},${pts[i + 1][1] - t[i + 1] * h} ${pts[i + 1][0]},${pts[i + 1][1]}`;
+  }
+  return d;
+}
+
+let gradientId = 0;
+function lineChart(hostId, series, opts) {
+  const host = document.getElementById(hostId);
+  host.innerHTML = "";
+  const W = Math.max(280, Math.round(host.clientWidth) || 760), narrow = W < 560;
+  const H = narrow ? 230 : 280, m = { t: 16, r: narrow ? 50 : 58, b: 30, l: 36 };
+  const iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const svg = el("svg", { class: "chart", viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": opts.label }, host);
+  const n = DATA.weeks.length;
+  const all = series.flatMap(s => s.values.filter(v => v !== null));
+  const max = niceMax(Math.max(...all) * 1.08);
+  const x = i => m.l + (i / (n - 1)) * iw;
+  const y = v => m.t + ih - (v / max) * ih;
+
+  for (let k = 0; k <= 4; k++) {
+    const v = (max / 4) * k, yy = y(v);
+    el("line", { x1: m.l, x2: m.l + iw, y1: yy, y2: yy, stroke: k === 0 ? "var(--axis)" : "var(--grid)", "stroke-width": 1 }, svg);
+    el("text", { x: m.l - 10, y: yy + 4, "text-anchor": "end" }, svg, Number.isInteger(v) ? v : v.toFixed(1));
+  }
+  DATA.weeks.forEach((w, i) => {
+    if (i % (narrow ? 4 : 2)) return;
+    el("line", { x1: x(i), x2: x(i), y1: m.t, y2: m.t + ih, stroke: "var(--grid)", "stroke-width": 1 }, svg);
+    el("text", { x: x(i), y: H - 8, "text-anchor": "middle" }, svg, fmtDay(w));
+  });
+
+  const defs = el("defs", {}, svg);
+  const drawn = series.map(s => {
+    const pts = s.values.map((v, i) => v === null ? null : [x(i), y(v)]).filter(Boolean);
+    const id = "g" + (++gradientId);
+    const grad = el("linearGradient", { id, x1: 0, x2: 0, y1: 0, y2: 1 }, defs);
+    el("stop", { offset: "0%", style: `stop-color:${s.color};stop-opacity:${s.area}` }, grad);
+    el("stop", { offset: "100%", style: `stop-color:${s.color};stop-opacity:0` }, grad);
+    const line = smoothPath(pts);
+    el("path", { d: `${line} L${pts[pts.length - 1][0]},${y(0)} L${pts[0][0]},${y(0)} Z`, fill: `url(#${id})` }, svg);
+    return { s, pts, line };
+  });
+  drawn.forEach(({ s, pts, line }) => {
+    el("path", { d: line, fill: "none", stroke: s.color, "stroke-width": 2.5, "stroke-linecap": "round", "stroke-linejoin": "round" }, svg);
+    const last = pts[pts.length - 1], lastV = s.values.filter(v => v !== null).slice(-1)[0];
+    el("circle", { cx: last[0], cy: last[1], r: 4.5, fill: s.color, stroke: "var(--surface)", "stroke-width": 2 }, svg);
+    el("text", { x: last[0] + 10, y: last[1] + 4, class: "val" }, svg, opts.format(lastV));
+  });
+
+  const cross = el("line", { y1: m.t, y2: m.t + ih, stroke: "rgba(255,255,255,0.22)", "stroke-width": 1, visibility: "hidden" }, svg);
+  const dots = series.map(s => el("circle", { r: 5.5, fill: s.color, stroke: "var(--surface)", "stroke-width": 2, visibility: "hidden" }, svg));
+  const tip = tooltip(host);
+  const hit = el("rect", { x: m.l - 12, y: m.t, width: iw + 24, height: ih, fill: "transparent" }, svg);
+  hit.addEventListener("pointermove", e => {
+    const box = svg.getBoundingClientRect(), scale = box.width / W;
+    const i = Math.max(0, Math.min(n - 1, Math.round(((e.clientX - box.left) / scale - m.l) / iw * (n - 1))));
+    cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i)); cross.setAttribute("visibility", "visible");
+    let top = H;
+    series.forEach((s, k) => {
+      const v = s.values[i];
+      if (v === null) { dots[k].setAttribute("visibility", "hidden"); return; }
+      dots[k].setAttribute("cx", x(i)); dots[k].setAttribute("cy", y(v)); dots[k].setAttribute("visibility", "visible");
+      top = Math.min(top, y(v));
+    });
+    tip.show(opts.tip(i), x(i) * scale, top * scale);
+  });
+  hit.addEventListener("pointerleave", () => {
+    cross.setAttribute("visibility", "hidden"); dots.forEach(d => d.setAttribute("visibility", "hidden")); tip.hide();
+  });
+}
+
+function donut(hostId, legendId, parts, centerLabel) {
+  const host = document.getElementById(hostId);
+  const S = 240, cx = S / 2, cy = S / 2, R = 104, r = 74;
+  const svg = el("svg", { class: "chart", viewBox: `0 0 ${S} ${S}`, role: "img", "aria-label": "Bill status", style: "max-width:240px;margin:6px auto 0" }, host);
+  const total = parts.reduce((a, p) => a + p.value, 0);
+  const tip = tooltip(host);
+  const gap = 2 / R;
+  let a0 = -Math.PI / 2;
+  const pt = (rad, a) => [cx + rad * Math.cos(a), cy + rad * Math.sin(a)];
+  parts.forEach(p => {
+    if (!p.value) return;
+    const sweep = (p.value / total) * Math.PI * 2;
+    const s = a0 + gap / 2, e = a0 + sweep - gap / 2, large = e - s > Math.PI ? 1 : 0;
+    const [x1, y1] = pt(R, s), [x2, y2] = pt(R, e), [x3, y3] = pt(r, e), [x4, y4] = pt(r, s);
+    const path = el("path", { d: `M${x1},${y1} A${R},${R} 0 ${large} 1 ${x2},${y2} L${x3},${y3} A${r},${r} 0 ${large} 0 ${x4},${y4} Z`, fill: p.color }, svg);
+    const mid = a0 + sweep / 2;
+    path.addEventListener("pointermove", () => {
+      const scale = svg.getBoundingClientRect().width / S, [tx, ty] = pt((R + r) / 2, mid);
+      tip.show(`<span class="k" style="background:${p.color}"></span><b>${p.label}</b><br>${fmtInt(p.value)} bills · ${(100 * p.value / total).toFixed(0)}%`,
+               (tx + (host.clientWidth / scale - S) / 2) * scale, ty * scale);
+    });
+    path.addEventListener("pointerleave", tip.hide);
+    a0 += sweep;
+  });
+  el("text", { x: cx, y: cy + 2, "text-anchor": "middle", style: "font-size:30px;font-weight:800;fill:var(--text)" }, svg, fmtInt(total));
+  el("text", { x: cx, y: cy + 24, "text-anchor": "middle", style: "font-size:12px" }, svg, centerLabel);
+  document.getElementById(legendId).innerHTML = parts.map(p =>
+    `<span><i class="dot" style="background:${p.color}"></i>${p.label} <b>(${fmtInt(p.value)})</b></span>`).join("");
+}
+
+function table(hostId, head, rows) {
+  const t = document.createElement("table");
+  t.innerHTML = "<thead><tr>" + head.map(h => `<th>${h}</th>`).join("") + "</tr></thead><tbody>" +
+    rows.map(r => "<tr>" + r.map(c => `<td>${c}</td>`).join("") + "</tr>").join("") + "</tbody>";
+  document.getElementById(hostId).appendChild(t);
+}
+
+document.getElementById("range").textContent = `${fmtDay(DATA.window.start)} – ${fmtDay(DATA.window.end)}, 2026`;
+
+const a = DATA.active, now = a[a.length - 1], diff = now - a[a.length - 2];
+const totalDocs = DATA.modules.reduce((s, r) => s + r.documents, 0);
+const o = DATA.overall, bs = DATA.billStatus;
+const delta = diff === 0 ? "No change vs last week"
+  : `<span class="delta ${diff > 0 ? "up" : "down"}">${diff > 0 ? "▲" : "▼"} ${Math.abs(diff)}</span> vs last week`;
+const tiles = [
+  { tone: "", ic: "i-building", value: now, label: "Weekly active companies", sub: `${delta} · ${DATA.companiesInWindow} in period` },
+  { tone: "blue", ic: "i-file", value: fmtInt(totalDocs), label: "Documents processed", sub: `Across ${DATA.modules.length} modules · 12 weeks` },
+  { tone: "green", ic: "i-clock", value: `${o.avgDays}<small>days</small>`, label: "Bill received to paid", sub: `Median ${o.medianDays} days · ${fmtInt(o.billsPaid)} bills paid` },
+  { tone: "orange", ic: "i-receipt", value: fmtInt(bs.approved + bs.awaiting), label: "Bills awaiting payment",
+    sub: `${fmtInt(bs.approved)} approved · ${fmtInt(bs.awaiting)} awaiting approval` },
+];
+document.getElementById("tiles").innerHTML = tiles.map(t => `
+  <div class="card tile ${t.tone}">
+    <span class="ichip">${icon(t.ic)}</span>
+    <div class="value">${t.value}</div>
+    <div class="label">${t.label}</div>
+    <div class="sub">${t.sub}</div>
+  </div>`).join("");
+
+function drawLines() {
+  lineChart("chart-active", [{ values: DATA.active, color: "var(--gold)", area: 0.28 }], {
+    label: "Weekly active companies", format: v => v,
+    tip: i => `${weekLabel(DATA.weeks[i])}<br><span class="k" style="background:var(--gold)"></span><b>${DATA.active[i]}</b> active companies`
+  });
+
+  lineChart("chart-cycle", [
+    { values: DATA.cycle.map(c => c ? c.avg : null), color: "var(--series-avg)", area: 0.16 },
+    { values: DATA.cycle.map(c => c ? c.median : null), color: "var(--series-median)", area: 0.10 },
+  ], {
+    label: "Days from bill received to bill paid, average and median", format: v => v.toFixed(1) + " d",
+    tip: i => {
+      const c = DATA.cycle[i];
+      if (!c) return `${weekLabel(DATA.weeks[i])}<br>No bills paid`;
+      return `${weekLabel(DATA.weeks[i])}<br><span class="k" style="background:var(--series-avg)"></span>Average <b>${c.avg.toFixed(1)} days</b>` +
+             `<br><span class="k" style="background:var(--series-median)"></span>Median <b>${c.median.toFixed(1)} days</b><br>${c.bills} bills paid`;
+    }
+  });
+}
+drawLines();
+let lastWidth = window.innerWidth, resizeTimer;
+window.addEventListener("resize", () => {
+  if (window.innerWidth === lastWidth) return;
+  lastWidth = window.innerWidth;
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(drawLines, 120);
+});
+
+donut("chart-status", "legend-status", [
+  { label: "Paid", value: bs.paid, color: "var(--status-paid)" },
+  { label: "Approved", value: bs.approved, color: "var(--status-approved)" },
+  { label: "Awaiting approval", value: bs.awaiting, color: "var(--status-awaiting)" },
+], "bills received");
+
+const maxDocs = Math.max(...DATA.modules.map(r => r.documents));
+document.getElementById("modules").innerHTML = DATA.modules.map(r => `
+  <li><div class="line"><span class="name">${r.label}</span>
+    <span class="num"><b>${fmtInt(r.documents)}</b>${(100 * r.documents / totalDocs).toFixed(0)}%</span></div>
+    <div class="track"><div class="fill" style="width:${(100 * r.documents / maxDocs).toFixed(1)}%"></div></div></li>`).join("");
+
+table("table-active", ["Week of", "Active companies"], DATA.weeks.map((w, i) => [fmtDay(w), DATA.active[i]]));
+table("table-cycle", ["Week of", "Bills paid", "Average days", "Median days"],
+  DATA.weeks.map((w, i) => { const c = DATA.cycle[i]; return c ? [fmtDay(w), c.bills, c.avg.toFixed(1), c.median.toFixed(1)] : [fmtDay(w), 0, "–", "–"]; }));
+</script>
+</body>
+</html>
